@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погодный сайт</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-cloud-sun"></i> Погода сейчас</h1>
+            <p class="subtitle">Актуальная погода по всему миру</p>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input type="text" id="cityInput" placeholder="Введите город..." 
+                       value="Новосибирск">
+                <button id="searchBtn" class="btn-primary">
+                    <i class="fas fa-search"></i> Поиск
+                </button>
+                <button id="locationBtn" class="btn-secondary" title="Мое местоположение">
+                    <i class="fas fa-location-arrow"></i>
+                </button>
+            </div>
+            
+            <div class="quick-cities">
+                <button class="city-chip" data-city="Москва">Москва</button>
+                <button class="city-chip" data-city="Санкт-Петербург">СПб</button>
+                <button class="city-chip" data-city="Екатеринбург">Екатеринбург</button>
+                <button class="city-chip" data-city="Владивосток">Владивосток</button>
+            </div>
+        </div>
+
+        <main>
+            <!-- Карточка с текущей погодой -->
+            <div class="weather-card" id="weatherCard">
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Загружаем данные...</p>
+                </div>
+                
+                <div class="weather-header">
+                    <h2 id="cityName">Новосибирск, RU</h2>
+                    <p id="currentDate" class="date-time"></p>
+                </div>
+                
+                <!-- КРУПНАЯ КАРТИНКА ПОГОДЫ (ВАША!) -->
+                <div class="weather-icon-large">
+                    <img id="weatherImage" src="{{ url_for('static', filename='images/default.png') }}" 
+                         alt="Погода" class="main-weather-icon">
+                </div>
+                
+                <div class="weather-main">
+                    <div class="temperature-section">
+                        <div class="temp-display">
+                            <span id="temperature" class="temp-value">-13</span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                        <div class="temp-details">
+                            <p>Ощущается как <span id="feelsLike">-20°C</span></p>
+                            <p>Мин/Макс: <span id="tempRange">-15° / -10°</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-condition">
+                        <div>
+                            <h3 id="weatherDescription">Ясно</h3>
+                            <p id="weatherMain">Clear</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="weather-details-grid">
+                    <div class="detail-card">
+                        <div class="detail-icon humidity">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Влажность</p>
+                            <p class="detail-value" id="humidityValue">72%</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon wind">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Ветер</p>
+                            <p class="detail-value" id="windValue">5 м/с</p>
+                            <p class="detail-sub" id="windDirection">СЗ</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon pressure">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Давление</p>
+                            <p class="detail-value" id="pressureValue">1032 гПа</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon sunrise">
+                            <i class="fas fa-sun"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Восход</p>
+                            <p class="detail-value" id="sunriseTime">08:45</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <div class="detail-icon sunset">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <div class="detail-info">
+                            <p class="detail-label">Закат</p>
+                            <p class="detail-value" id="sunsetTime">17:30</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Данные предоставлены <a href="https://openweathermap.org" target="_blank">OpenWeatherMap</a></p>
+            <p>Обновлено: <span id="lastUpdated">только что</span></p>
+        </footer>
+        
+        <div class="error-toast" id="errorToast">
+            <span id="errorMessage"></span>
+            <button onclick="hideError()">×</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
